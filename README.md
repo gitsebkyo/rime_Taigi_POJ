@@ -4,6 +4,7 @@
 
 A Rime-based input schema for Taiwanese Pe̍h-ōe-jī (POJ). This project integrates curated dictionaries and functional lexicons to provide an educational and efficient input tool for the Taiwanese language.
 
+Download: https://rime.im
 ---
 
 ## 核心特色 Core Features
@@ -78,7 +79,7 @@ A Rime-based input schema for Taiwanese Pe̍h-ōe-jī (POJ). This project integr
 
 ### 4. 進階技巧
 * **翻頁**：使用鍵盤上的 **`[`** 與 **`]`** (中括號) 或 **`Tab`**。
-* **簡拼**：支援聲母縮寫。例如輸入 `t o` 也能找到「台灣」，輸入愈完整，過濾愈精確。
+* **簡拼**：支援聲母縮寫。例如輸入 `t o` `tai o` `tai oan` 也能找到「台灣」，輸入愈完整，過濾愈精確。
 * **刪除修正**：若打錯調號，可按 **左右方向鍵** 回頭修改特定音節，不必整串刪除。
 
 ---
