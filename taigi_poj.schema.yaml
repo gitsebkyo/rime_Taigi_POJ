@@ -1,0 +1,187 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: taigi_poj
+  name: Pe̍h-ōe-jī
+  version: "2.0"
+  description: Tâi-oan Pe̍h-ōe-jī
+  author:
+    - Ngô͘ Hê-bí <ngoohebi@gmail.com>
+    - William Pan <wpan@berkeley.edu>
+    - Sebastian Kyo <>
+
+switches:
+  - name: ascii_mode
+    states: ["POJ", "En"]
+    reset: 0   # 預設0是台文，1是英文
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - navigator
+    - selector
+    - punctuator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - script_translator
+  filters:
+    - uniquifier
+    #- lua_filter@first_char_upcase_filter
+
+menu:
+  page_size: 6 #先暫時用六個
+  alternative_select_labels: [ ⇧1, ⇧2, ⇧3, ⇧4, ⇧5, ⇧6, ⇧7, ⇧8, ⇧9 ]
+
+speller:
+  alphabet: 'abceghijklmnoprstuABCEGHIJKLMNOPRSTU123456789-'
+  initials: 'abceghijklmnoprstuABCEGHIJKLMNOPRSTU'
+  delimiter: " -"
+  algebra:
+    # 聲調過濾與無聲調全拼 (保持在最前)
+    - derive/^([abceghijklmnoprstuABCEGHIJKLMNOPRSTU]).+([1-9])$/$1$2/
+    - derive/^([abceghijklmnoprstuABCEGHIJKLMNOPRSTU]+)[1-9]$/$1/ 
+    # 優先處理「多字母聲母」的簡拼
+    - derive/^((chh|Chh|CHH|ch|Ch|CH|th|Th|TH|ph|Ph|PH|kh|Kh|KH|ng|Ng|NG)).+$/$1/
+    # 針對 1、4 聲的特殊縮寫
+    - abbrev/^([abceghijklmnoprstuABCEGHIJKLMNOPRSTU]).+[14]$/$1/
+    # 處理「單字母聲母」的簡拼
+    - abbrev/^([abceghijklmnoprstuABCEGHIJKLMNOPRSTU]).+$/$1/
+    # 雙字、三字詞首字母連打
+    - abbrev/^([a-zA-Z]).+ ([a-zA-Z]).+$/$1$2/
+    - abbrev/^([a-zA-Z]).+ ([a-zA-Z]).+ ([a-zA-Z]).+$/$1$2$3/
+
+translator:
+  dictionary: taigi_poj
+  enable_user_dict: false
+  enable_sentence: false
+  enable_completion: true
+  initial_quality: 1000
+  spelling_hints: 8
+  preedit_format:
+    # 1. 處理例外：oai, oan, oat, oah, oeh 標在後方的母音上
+    - 'xform ([oO])([aA][inhtINHT])([1-9]) $1$2$3'
+    - 'xform ([oO])([eE][hH])([1-9]) $1$2$3'
+    - 'xform ([oO][aA])([iI])([1-9]) $1$2$3'
+
+    # 2. 定義核心優先序：o > e > a > u > i
+    - 'xform ([oO])([aeAEiIuU])([1-9]) $1$3$2'
+    - 'xform ([eE])([aiuAIU])([1-9]) $1$3$2'
+    - 'xform ([aA])([iuIU])([1-9]) $1$3$2'
+    - 'xform ([uU])([iI])([1-9]) $1$3$2'
+    - 'xform ([iI])([uU])([1-9]) $2$3$1'
+
+    # 3. 處理鼻音與單母音尾音定位
+    - 'xform ([aeiouAEIOUmnMN])(r?m?n*h?g?p?t?k?)([1-9]) $1$3$2'
+
+    # --- B. 具體調號轉換 (1-9) ---
+    - 'xform ([aeioumnAEIOUMN])1 $1'
+    - 'xform (ng|NG)1 $1'
+    - 'xform ([aeiouAEIOU])4 $1'
+    - 'xform (ng|m|NG|M)h4 $1h'
+
+    # 2 聲
+    - 'xform a2 á'
+    - 'xform e2 é'
+    - 'xform i2 í'
+    - 'xform u2 ú'
+    - 'xform o2 ó'
+    - 'xform A2 Á'
+    - 'xform E2 É'
+    - 'xform I2 Í'
+    - 'xform U2 Ú'
+    - 'xform O2 Ó'
+    # 3 聲
+    - 'xform a3 à'
+    - 'xform e3 è'
+    - 'xform i3 ì'
+    - 'xform u3 ù'
+    - 'xform o3 ò'
+    - 'xform A3 À'
+    - 'xform E3 È'
+    - 'xform I3 Ì'
+    - 'xform U3 Ù'
+    - 'xform O3 Ò'
+    # 5 聲
+    - 'xform a5 â'
+    - 'xform e5 ê'
+    - 'xform i5 î'
+    - 'xform u5 û'
+    - 'xform o5 ô'
+    - 'xform A5 Â'
+    - 'xform E5 Ê'
+    - 'xform I5 Î'
+    - 'xform U5 Û'
+    - 'xform O5 Ô'
+    # 7 聲
+    - 'xform a7 ā'
+    - 'xform e7 ē'
+    - 'xform i7 ī'
+    - 'xform u7 ū'
+    - 'xform o7 ō'
+    - 'xform A7 Ā'
+    - 'xform E7 Ē'
+    - 'xform I7 Ī'
+    - 'xform U7 Ū'
+    - 'xform O7 Ō'
+    # 8 聲
+    - 'xform a8 a̍'
+    - 'xform e8 e̍'
+    - 'xform i8 i̍'
+    - 'xform u8 u̍'
+    - 'xform o8 o̍'
+    - 'xform A8 A̍'
+    - 'xform E8 E̍'
+    - 'xform I8 I̍'
+    - 'xform U8 U̍'
+    - 'xform O8 O̍'
+    # 鼻音特殊標註 (ng 標在 n 上)
+    - 'xform n2g ńg'
+    - 'xform n3g ǹg'
+    - 'xform n5g n̂g'
+    - 'xform n7g n̄g'
+    - 'xform n8g n̍g'
+    - 'xform m2 ḿ'
+    - 'xform m5 m̂'
+    - 'xform m7 m̄'
+    - 'xform m8 m̍'
+
+key_binder:
+  import_preset: default
+  bindings:
+    - { accept: Return, send: Shift+Return, when: composing } #enter直接輸出編輯區
+#直接鍵入數字加入調號
+    - { accept: 1, send: 1, when: composing }
+    - { accept: 2, send: 2, when: composing }
+    - { accept: 3, send: 3, when: composing }
+    - { accept: 4, send: 4, when: composing }
+    - { accept: 5, send: 5, when: composing }
+    - { accept: 6, send: 6, when: composing }
+    - { accept: 7, send: 7, when: composing }
+    - { accept: 8, send: 8, when: composing }
+    - { accept: 9, send: 9, when: composing }
+#選字shift+數字
+    - { when: has_menu, accept: Shift+exclam,      send: Control+1 }
+    - { when: has_menu, accept: Shift+at,          send: Control+2 }
+    - { when: has_menu, accept: Shift+numbersign,  send: Control+3 }
+    - { when: has_menu, accept: Shift+dollar,      send: Control+4 }
+    - { when: has_menu, accept: Shift+percent,     send: Control+5 }
+    - { when: has_menu, accept: Shift+asciicircum, send: Control+6 }
+    - { when: has_menu, accept: Shift+ampersand,   send: Control+7 }
+    - { when: has_menu, accept: Shift+asterisk,    send: Control+8 }
+    - { when: has_menu, accept: Shift+parenleft,   send: Control+9 }
+#翻頁快捷鍵(Tab(+shift)/[,])
+    - { accept: Tab, send: Page_Down, when: composing }
+    - { accept: Shift+Tab, send: Page_Up, when: composing }
+    - { accept: bracketright, send: Page_Down, when: composing }
+    - { accept: bracketleft, send: Page_Up, when: composing }
