@@ -5,6 +5,7 @@
 A Rime-based input schema for Taiwanese Pe̍h-ōe-jī (POJ). This project integrates curated dictionaries and functional lexicons to provide an educational and efficient input tool for the Taiwanese language.
 
 Download: https://rime.im
+
 ---
 
 ## 核心特色 Core Features
@@ -91,7 +92,7 @@ Download: https://rime.im
 ### 開源致謝與聲明 (Acknowledgements)
 本專案為衍生作品，主架構與功能參考並修改自多個現有 Rime 方案。
 * **架構參考**：參考自多位多語種開發者的 Rime 基礎配置，自行編寫而成。
-* **資料來源**：詞庫參考並整合了信望愛台語文資料及多方公開字典。
+* **資料來源**：詞庫參考並整合了PhahTaigi、信望愛台語文資料及多方公開字典。
 * **修改說明**：本版本已針對主架構進行深度調整，並發生顯著的功能性變化與優化。
 
 This project is a derivative work under the MIT License.
