@@ -30,17 +30,6 @@ Download: https://rime.im
 
 ---
 
-## 功能對比 Functional Comparison
-
-| 功能項目 (Feature) | 本專案 (This Project) | 信望愛/傳統系統 (FHL/Traditional) | 一般漢字輸入法 (Standard Han IME) |
-| :--- | :--- | :--- | :--- |
-| **主要輸出 (Primary Output)** | **白話字 (POJ)** | POJ / 漢字 | 漢字 |
-| **拼音邏輯 (Pinyin Logic)** | **模糊與容錯 (Fuzzy)** | 嚴謹固定 (Strict) | 固定 (Fixed) |
-| **教學模式 (Edu Mode)** | **顯示編碼與漢字對照** | 較少 (Limited) | 無 (None) |
-| **詞庫更新 (Lexicon)** | 開放且持續收錄 | 較固定 | 視廠商而定 |
-
----
-
 ## 安裝說明 Installation
 
 1. 下載本倉庫的所有 `.yaml` 與 `.dict.yaml` 檔案。
@@ -81,6 +70,7 @@ Download: https://rime.im
 * **【Shift + 數字】**：**強制選字**。若要選第 2 個候選字，按 `Shift + 2`（避免與聲調數字衝突）。
 
 ### 4. 進階技巧
+* **切換大小寫**：**`control`** + **`sfift`** + **`Z`** for Abc / **`X`** for ABC。
 * **翻頁**：使用鍵盤上的 **`[`** 與 **`]`** (中括號)前後換頁 或 **`Tab`**依序換頁。
 * **簡拼**：支援聲母縮寫。例如輸入 `t o` `t5 o5` `tai o` `t oan` `tai o5` `t5 oan` `tai oan` 全都能找到「台灣」，輸入愈完整，過濾愈精確。
 * **刪除修正**：若打錯調號，可按 **左右方向鍵** 回頭修改特定音節，不必整串刪除。
